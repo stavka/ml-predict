@@ -63,7 +63,7 @@ earlystopper = EarlyStopping(monitor='val_loss', patience=1, verbose=1)
 checkpointer = ModelCheckpoint(filepath="models/weights.hdf5", verbose=1, save_best_only=True)
  
 print "Training " + str(datetime.datetime.now())
-history = model.fit(X_train[:,:,:2]-X_means[:2], Y_train[:,:,pred_idx,np.newaxis]-Y_means[pred_idx], batch_size=5, nb_epoch=1, validation_split=.15, callbacks=[checkpointer, earlystopper])
+history = model.fit(X_train[:,:,:10]-X_means[:10], Y_train[:,:,pred_idx,np.newaxis]-Y_means[pred_idx], batch_size=5, nb_epoch=10, validation_split=.15, callbacks=[checkpointer, earlystopper])
 
 print "Done training " + str(datetime.datetime.now())
 plt.plot(history.epoch, history.history['loss'],history.epoch, history.history['val_loss'])
@@ -72,7 +72,7 @@ plt.legend(['train','validation'])
 plt.savefig(outputfile + '.png')
 
 print "Predicting " + str(datetime.datetime.now())
-Y_pred = model.predict(X_test[:,:,:2]-X_means[:2],batch_size=5)
+Y_pred = model.predict(X_test[:,:,:10]-X_means[:10],batch_size=5)
 
 print "Saving result " + str(datetime.datetime.now())
 Y_pred.to_csv(outputfile+'.csv')
