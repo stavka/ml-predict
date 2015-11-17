@@ -75,6 +75,6 @@ print "Predicting " + str(datetime.datetime.now())
 Y_pred = model.predict(X_test[:,:,:10]-X_means[:10],batch_size=5)
 
 print "Saving result " + str(datetime.datetime.now())
-Y_pred.to_csv(outputfile+'.csv')
 
+np.savetxt(outputfile+'.csv', Y_pred, delimiter=",")
 
