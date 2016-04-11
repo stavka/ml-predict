@@ -81,12 +81,12 @@ pprint.pprint(results)
 #pprint.pprint(results)
 
 
-def training_function( x, x1, y1, x2, y2 ):
-    lr, decay, momentum, batch_size = x[0],x[1],x[2], 100
-    tt, score = timed_sgd_OLS(x1=x1,y1=y1,x2=x2,y2=y2, lr=lr, decay=decay, nesterov=True, momentum=momentum, batch_size=batch_size )
-    if isnan(score):
-            score = 1000 
-    return tt*tt+score*score
+# def training_function( x, x1, y1, x2, y2 ):
+#     lr, decay, momentum, batch_size = x[0],x[1],x[2], 100
+#     tt, score = timed_sgd_OLS(x1=x1,y1=y1,x2=x2,y2=y2, lr=lr, decay=decay, nesterov=True, momentum=momentum, batch_size=batch_size )
+#     if isnan(score):
+#             score = 1000 
+#     return tt*tt+score*score
  
  
 #(0.1, 1e-2, 0.8, 100)
@@ -97,10 +97,10 @@ def training_function( x, x1, y1, x2, y2 ):
 #                                 bounds=((0.01,0.5),(1e-4,0.1),(0.1,0.95),(10, 200)) )
 
 
-min_result = scipy_opt.basinhopping( training_function, (0.01, 5e-2, 0.8), minimizer_kwargs = { 'args' : (x1,y1,x2,y2) } )
-
-  
-pprint.pprint(min_result)
+# min_result = scipy_opt.basinhopping( training_function, (0.01, 5e-2, 0.8), minimizer_kwargs = { 'args' : (x1,y1,x2,y2) } )
+# 
+#   
+# pprint.pprint(min_result)
 
 #x': array([  1.00000030e-01,   1.00000068e-02,   8.00000011e-01,
 #         1.00000008e+02])}
