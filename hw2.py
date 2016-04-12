@@ -15,9 +15,10 @@ from keras.regularizers import l1,l2,l1l2
 from keras.callbacks import EarlyStopping
 from time import time
 import numpy as np
-import pprint
+from pprint import pprint
 import scipy.optimize as scipy_opt
 from math import isnan
+from time import strftime
 
 N,K = 1000,10
 np.random.seed(78) #Make sure to use seed 78 for grading
@@ -50,19 +51,21 @@ def timed_sgd_OLS(x1,y1,x2=None,y2=None,
     #print("Time:",time()-time0)
     return time()-time0, score
 
+with open("file_out.txt", "w") as fout:
 
+    pprint( strftime("%Y-%m-%d %H:%M:%S"), fout)
 
-results = []
+    results = []
+    
+    for bs in (10, 50, 100, 200, 500):
+        for lr in (0.001,0.01,0.05,0.1, 0.5, 0.75):
+            for decay in (1e-2*x for x in (0.01, 0.05, 0.2, 1, 5, 10, 20)):
+                for mom in ( 0.1, 0.5, 0.8, 0.95):
+                    result = timed_sgd_OLS(x1,y1,x2,y2, lr = lr, decay=decay, momentum=mom, batch_size=bs)
+                    pprint( (bs,lr,decay,mom,result) , fout)
+                fout.flush()
 
-for bs in (10, 50, 100, 200, 500):
-    for lr in (0.001,0.01,0.02,0.05,0.1, 0.2, 0.5, 0.75):
-        for decay in (1e-2*x for x in (0.01, 0.05, 0.1, 0.2, 0.5, 1., 2., 5., 10., 20., 50.)):
-            for mom in (0.1, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, .95):
-        
-                results.append((bs,lr,decay,mom,timed_sgd_OLS(x1,y1,x2,y2, lr = lr, decay=decay, momentum=mom, batch_size=bs)))
- 
-pprint.pprint(results)       
-
+    pprint(strftime("%Y-%m-%d %H:%M:%S"), fout)
 
 # results = []
 #  
